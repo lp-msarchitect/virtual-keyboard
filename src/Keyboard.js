@@ -7,6 +7,8 @@ class Keyboard {
     this.keys = {};
     this.html = '';
     this.addRows(this.keyRows, layoutsMap[this.layout]);
+    this.id = 'keyboard';
+    this.addListeners();
   }
 
   addRows(keyRows, layout) {
@@ -18,7 +20,7 @@ class Keyboard {
       });
       this.html += `<div class="row keyboard__row">${rowHtml}</div>`;
     });
-    this.html = `<div class="keyboard">${this.html}</div>`;
+    this.html = `<div class="keyboard" id="${this.id}">${this.html}</div>`;
   }
 
   addKey(keyObj, layoutKeyObj) {
@@ -30,6 +32,23 @@ class Keyboard {
     );
     this.keys[key.id] = key;
     return key.getHtml();
+  }
+
+  addListeners() {
+    document.addEventListener('keydown', (e) => {
+      e.preventDefault();
+      const key = this.keys[Key.getIdFromCode(e.code)];
+      if (key) {
+        key.downKey();
+      }
+    });
+    document.addEventListener('keyup', (e) => {
+      e.preventDefault();
+      const key = this.keys[Key.getIdFromCode(e.code)];
+      if (key) {
+        key.upKey();
+      }
+    });
   }
 }
 

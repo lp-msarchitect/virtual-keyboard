@@ -1,3 +1,5 @@
+const PRESS_KEY_CLASS = 'key--pressed';
+
 class Key {
   constructor(keyCode, text = '', isControl = false, width = 0) {
     this.keyCode = keyCode;
@@ -7,7 +9,7 @@ class Key {
     this.setHtml(width);
   }
 
-  set id(code) {
+  static getIdFromCode(code) {
     let id = 'key';
     const codeArr = code.split('');
     for (let i = 0; i < codeArr.length; i++) {
@@ -18,7 +20,11 @@ class Key {
         id += char;
       }
     }
-    this.htmlId = id;
+    return id;
+  }
+
+  set id(code) {
+    this.htmlId = Key.getIdFromCode(code);
   }
 
   get id() {
@@ -48,6 +54,18 @@ class Key {
 
   getHtml() {
     return this.htmlStr;
+  }
+
+  downKey() {
+    const keyElement = document.getElementById(this.id);
+    if (!keyElement.classList.contains(PRESS_KEY_CLASS)) {
+      keyElement.classList.add(PRESS_KEY_CLASS);
+    }
+  }
+
+  upKey() {
+    const keyElement = document.getElementById(this.id);
+    keyElement.classList.remove(PRESS_KEY_CLASS);
   }
 }
 

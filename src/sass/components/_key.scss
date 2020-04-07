@@ -36,4 +36,12 @@ $button-glow-addition-color: $glow-addition-color;
   &:hover {
     background-color: $button-back-ground-hover-color;
   }
+
+  &--pressed {
+    @include glow($button-glow-color, 1px);
+  }
+
+  &--control.key--pressed {
+    @include glow($button-glow-addition-color, 1px);
+  }
 }
