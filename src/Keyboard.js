@@ -35,12 +35,27 @@ class Keyboard {
     return key.getHtml();
   }
 
+  static output(key) {
+    const outputElement = document.getElementById('output');
+    if (!key.isControl) {
+      outputElement.value += key.text;
+    }
+  }
+
   addListeners() {
+    document.addEventListener('click', (e) => {
+      if (e.target.id.indexOf('key') === 0) {
+        Keyboard.output(this.keys[e.target.id]);
+      }
+    });
+
     document.addEventListener('keydown', (e) => {
       e.preventDefault();
+
       const key = this.keys[Key.getIdFromCode(e.code)];
       if (key) {
         key.downKey();
+        Keyboard.output(key);
       }
 
       if (e.shiftKey) {

@@ -32,6 +32,7 @@
   border-radius: 5px;
   box-shadow: 0px 0px 8px 3px #c20114;
   cursor: pointer;
+  user-select: none;
 }
 .key--middle-long {
   width: 50px;

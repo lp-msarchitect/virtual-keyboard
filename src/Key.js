@@ -12,7 +12,7 @@ class Key {
   static getIdFromCode(code) {
     let id = 'key';
     const codeArr = code.split('');
-    for (let i = 0; i < codeArr.length; i++) {
+    for (let i = 0; i < codeArr.length; i += 1) {
       const char = codeArr[i];
       if (char.toUpperCase() === char) {
         id += `-${char.toLowerCase()}`;

@@ -17,6 +17,7 @@ $button-glow-addition-color: $glow-addition-color;
   border-radius: 5px;
   @include glow($button-glow-color);
   cursor: pointer;
+  user-select: none;
 
   &--middle-long {
     width: 50px;
