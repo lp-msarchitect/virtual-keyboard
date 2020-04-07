@@ -6,6 +6,7 @@ class Keyboard {
     this.keyRows = keyRows;
     this.keys = {};
     this.html = '';
+    this.layoutsMap = layoutsMap;
     this.addRows(this.keyRows, layoutsMap[this.layout]);
     this.id = 'keyboard';
     this.addListeners();
@@ -41,12 +42,31 @@ class Keyboard {
       if (key) {
         key.downKey();
       }
+
+      if (e.shiftKey) {
+        this.redrawKeyboard(this.layout, e.shiftKey);
+      }
     });
     document.addEventListener('keyup', (e) => {
       e.preventDefault();
       const key = this.keys[Key.getIdFromCode(e.code)];
       if (key) {
         key.upKey();
+      }
+      if (e.code.indexOf('Shift' !== -1)) {
+        this.redrawKeyboard(this.layout, false);
+      }
+    });
+  }
+
+  redrawKeyboard(layout, isShift) {
+    this.layout = layout;
+    Object.keys(this.keys).forEach((k) => {
+      const key = this.keys[k];
+      const layoutObj = this.layoutsMap[this.layout][key.keyCode];
+      const newText = isShift ? layoutObj.shiftText : layoutObj.text;
+      if (newText) {
+        key.redraw(newText);
       }
     });
   }

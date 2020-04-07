@@ -67,6 +67,11 @@ class Key {
     const keyElement = document.getElementById(this.id);
     keyElement.classList.remove(PRESS_KEY_CLASS);
   }
+
+  redraw(text) {
+    this.text = text;
+    document.getElementById(this.id).innerText = this.text;
+  }
 }
 
 export { Key as default };
