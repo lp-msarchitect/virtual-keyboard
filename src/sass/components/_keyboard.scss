@@ -1,0 +1,15 @@
+$keyboard-background-color: $background-color;
+
+.keyboard {
+  width: 715px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: $keyboard-background-color;
+  border: 1px solid $keyboard-background-color;
+
+  &__row {
+    margin: 0 8px;
+  }
+}

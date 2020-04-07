@@ -1,0 +1,39 @@
+$button-text-color: $text-color;
+$button-text-addition-color: $text-addition-color;
+$button-back-ground-color: $background-color;
+$button-back-ground-hover-color: $background-addition-color;
+$button-glow-color: $glow-color;
+$button-glow-addition-color: $glow-addition-color;
+
+.key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  color: $button-text-color;
+  font-weight: 600;
+  background-color: $button-back-ground-color;
+  border-radius: 5px;
+  @include glow($button-glow-color);
+  cursor: pointer;
+
+  &--middle-long {
+    width: 50px;
+  }
+  &--long {
+    width: 100px;
+  }
+  &--very-long {
+    width: 330px;
+  }
+
+  &--control {
+    color: $button-text-addition-color;
+    @include glow($button-glow-addition-color);
+  }
+
+  &:hover {
+    background-color: $button-back-ground-hover-color;
+  }
+}
