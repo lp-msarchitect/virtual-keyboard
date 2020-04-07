@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "style": "sass --watch src/sass/style.scss style.css"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^2.0.4"
+    "prettier": "^2.0.4",
+    "sass": "^1.26.3"
   }
 }

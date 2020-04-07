@@ -1,25 +1,31 @@
 class Key {
-  constructor(keyCode, text='', isControl = false, width = 0) {
+  constructor(keyCode, text = '', isControl = false, width = 0) {
     this.keyCode = keyCode;
-    this.id(keyCode);
+    this.id = keyCode;
     this.text = text;
     this.isControl = isControl;
-    this.setHTML(width);
+    this.setHtml(width);
   }
 
   set id(code) {
-    this.id = code.split('').reduce((idStr, char) => {
-      return idStr + char.toUpperCase() === char
-        ? `-${char.toLowerCase()}`
-        : char;
-    }, '');
+    let id = 'key';
+    const codeArr = code.split('');
+    for (let i = 0; i < codeArr.length; i++) {
+      const char = codeArr[i];
+      if (char.toUpperCase() === char) {
+        id += `-${char.toLowerCase()}`;
+      } else {
+        id += char;
+      }
+    }
+    this.htmlId = id;
   }
 
   get id() {
-    return this.id;
+    return this.htmlId;
   }
 
-  set setHTML(width) {
+  setHtml(width) {
     let classes = 'key';
     if (this.isControl) {
       classes += ' key--control';
@@ -37,11 +43,12 @@ class Key {
       default:
         break;
     }
-    this.htmlStr = `<div class="${classes}">${this.text}</div>`;
+    this.htmlStr = `<div class="${classes}" id="${this.id}">${this.text}</div>`;
   }
 
-  get getHTML(){
+  getHtml() {
     return this.htmlStr;
   }
+}
 
 export { Key as default };
