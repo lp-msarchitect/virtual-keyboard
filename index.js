@@ -1,5 +1,5 @@
-import keys from './keys.js';
-import Keyboard from './Keyboard.js';
+import keys from './src/keys.js';
+import Keyboard from './src/Keyboard.js';
 
 const layout = localStorage.layout ? localStorage.layout : 'eng';
 const keyboard = new Keyboard(keys.keyRows, keys.layoutMaps, layout);
