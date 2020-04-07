@@ -46,6 +46,10 @@ class Keyboard {
       if (e.shiftKey) {
         this.redrawKeyboard(this.layout, e.shiftKey);
       }
+
+      if (e.shiftKey && e.altKey) {
+        this.changeLayout();
+      }
     });
     document.addEventListener('keyup', (e) => {
       e.preventDefault();
@@ -57,6 +61,12 @@ class Keyboard {
         this.redrawKeyboard(this.layout, false);
       }
     });
+  }
+
+  changeLayout() {
+    this.layout = this.layout === 'rus' ? 'eng' : 'rus';
+    this.redrawKeyboard(this.layout, false);
+    localStorage.setItem('layout', this.layout);
   }
 
   redrawKeyboard(layout, isShift) {
