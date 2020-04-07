@@ -51,10 +51,31 @@
   background-color: #1e1d1b;
 }
 .key--pressed {
-  box-shadow: 0px 0px 1px 3px #c20114;
+  animation-name: pressdown;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
 }
-.key--control.key--pressed {
-  box-shadow: 0px 0px 1px 3px #2cabd8;
+.key--upped {
+  animation-name: upped;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes pressdown {
+  0% {
+    border-radius: 5px;
+  }
+  100% {
+    border-radius: 50%;
+  }
+}
+@keyframes upped {
+  0% {
+    border-radius: 50%;
+  }
+  100% {
+    border-radius: 5px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

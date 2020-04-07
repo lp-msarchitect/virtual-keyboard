@@ -39,13 +39,30 @@ class Keyboard {
     const outputElement = document.getElementById('output');
     if (!key.isControl) {
       outputElement.value += key.text;
+    } else {
+      switch (key.keyCode) {
+        case 'Enter':
+          outputElement.value += '\n';
+          break;
+        case 'Tab':
+          outputElement.value += '\t';
+          break;
+        case 'Backspace':
+          outputElement.value = outputElement.value.slice(0, -1);
+          break;
+        default:
+          break;
+      }
     }
+    outputElement.focus();
   }
 
   addListeners() {
     document.addEventListener('click', (e) => {
       if (e.target.id.indexOf('key') === 0) {
         Keyboard.output(this.keys[e.target.id]);
+        this.keys[e.target.id].downKey();
+        this.keys[e.target.id].upKey();
       }
     });
 

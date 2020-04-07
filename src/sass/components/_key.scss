@@ -39,10 +39,32 @@ $button-glow-addition-color: $glow-addition-color;
   }
 
   &--pressed {
-    @include glow($button-glow-color, 1px);
+    animation-name: pressdown;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
   }
 
-  &--control.key--pressed {
-    @include glow($button-glow-addition-color, 1px);
+  &--upped {
+    animation-name: upped;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes pressdown {
+  0% {
+    border-radius: 5px;
+  }
+  100% {
+    border-radius: 50%;
+  }
+}
+
+@keyframes upped {
+  0% {
+    border-radius: 50%;
+  }
+  100% {
+    border-radius: 5px;
   }
 }
