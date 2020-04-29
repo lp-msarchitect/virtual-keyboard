@@ -1,15 +1,15 @@
 import Key from './Key.js';
 
 class Keyboard {
-  constructor(keyRows, layoutsMap, layout = 'eng') {
+  constructor(keys, layout = 'eng') {
     this.layout = layout;
-    this.keyRows = keyRows;
+    this.keyRows = keys.keyRows;
     this.keys = {};
     this.html = '';
-    this.layoutsMap = layoutsMap;
-    this.addRows(this.keyRows, layoutsMap[this.layout]);
+    this.layoutsMap = keys.layoutMaps;
+    this.addRows(keys.keyRows, keys.layoutMaps[this.layout]);
     this.id = 'keyboard';
-    this.addListeners();
+    this.handlers = [];
   }
 
   addRows(keyRows, layout) {
@@ -57,16 +57,20 @@ class Keyboard {
     outputElement.focus();
   }
 
-  addListeners() {
-    document.addEventListener('click', (e) => {
+  addListeners(rootObj) {
+    if (this.handlers.length) {
+      return;
+    }
+
+    const clickHandler = (e) => {
       if (e.target.id.indexOf('key') === 0) {
         Keyboard.output(this.keys[e.target.id]);
         this.keys[e.target.id].downKey();
         this.keys[e.target.id].upKey();
       }
-    });
+    };
 
-    document.addEventListener('keydown', (e) => {
+    const keydownHandler = (e) => {
       e.preventDefault();
 
       const key = this.keys[Key.getIdFromCode(e.code)];
@@ -76,33 +80,48 @@ class Keyboard {
       }
 
       if (e.shiftKey) {
-        this.redrawKeyboard(this.layout, e.shiftKey);
+        this.redrawKeyboard(e.shiftKey);
       }
 
       if (e.shiftKey && e.altKey) {
         this.changeLayout();
       }
-    });
-    document.addEventListener('keyup', (e) => {
+    };
+
+    const keyupHandler = (e) => {
       e.preventDefault();
       const key = this.keys[Key.getIdFromCode(e.code)];
       if (key) {
         key.upKey();
       }
       if (e.code.indexOf('Shift' !== -1)) {
-        this.redrawKeyboard(this.layout, false);
+        this.redrawKeyboard(false);
       }
+    };
+
+    this.handlers.push(['click', clickHandler]);
+    this.handlers.push(['keyup', keyupHandler]);
+    this.handlers.push(['keydown', keydownHandler]);
+
+    this.handlers.forEach((conf) => {
+      rootObj.addEventListener(conf[0], conf[1]);
+    });
+  }
+
+  removeListeners(rootObj) {
+    this.handlers.forEach((conf) => {
+      rootObj.removeEventListener(conf[0], conf[1]);
     });
   }
 
   changeLayout() {
     this.layout = this.layout === 'rus' ? 'eng' : 'rus';
-    this.redrawKeyboard(this.layout, false);
+    this.redrawKeyboard(false);
     localStorage.setItem('layout', this.layout);
   }
 
-  redrawKeyboard(layout, isShift) {
-    this.layout = layout;
+  redrawKeyboard(isShift) {
+    // this.layout = layout;
     Object.keys(this.keys).forEach((k) => {
       const key = this.keys[k];
       const layoutObj = this.layoutsMap[this.layout][key.keyCode];
